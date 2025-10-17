@@ -1,0 +1,14 @@
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb_db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: dga123
+      MARIADB_DATABASE: sensoDB 
+      MARIADB_USER: ottobot
+      MARIADB_PASSWORD: vere123
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    ports:
+      - "3307:3306"
