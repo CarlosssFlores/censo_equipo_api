@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {ConfigModule} from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsuariosModule } from './usuarios/usuarios.module';
 
 
 
@@ -24,7 +25,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize:true,
 
 
-    })
+    }),
+    UsuariosModule
   ],
   controllers: [],
   providers: [AppService],
