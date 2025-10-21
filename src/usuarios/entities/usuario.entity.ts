@@ -11,6 +11,7 @@ export class Usuario {
     @Column({length:100,nullable:true})
     contraseña:string
     
+    
     @ManyToOne(()=>Tipo_Usuario,tipoUsuario=>tipoUsuario.usuarios )
     tipoUsuario:Tipo_Usuario;
 
@@ -22,7 +23,7 @@ export class Tipo_Usuario{
     @PrimaryGeneratedColumn()
     id_tipo_usuario:number
 
-    @Column({nullable:true})
+    @Column({length:50, nullable:true})
     tipo_usuario:string
 
     @OneToMany(()=>Usuario,usuarios=>usuarios.tipoUsuario)
