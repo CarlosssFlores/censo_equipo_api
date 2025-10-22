@@ -1,1 +1,3 @@
-export class CreateEquipoDto {}
+export class CreateEquipoDto {
+    
+}

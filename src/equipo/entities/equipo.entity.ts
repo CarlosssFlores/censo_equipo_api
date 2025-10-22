@@ -34,10 +34,7 @@ export class Equipo {
   @ManyToOne(() => TipoEquipo, (tipoEquipo) => tipoEquipo.equipo)
   tipoEquipo: TipoEquipo;
 
-  @ManyToOne(
-    () => SistemaOperativo,
-    (sistemaOperativo) => sistemaOperativo.equipo,
-  )
+  @ManyToOne(() => SistemaOperativo,(sistemaOperativo) => sistemaOperativo.equipo)
   sistemaOperativo: SistemaOperativo;
 
   @ManyToOne(() => Procesador, (procesador) => procesador.equipo)
@@ -66,4 +63,4 @@ export class Equipo {
 
   
 }
-}
+
