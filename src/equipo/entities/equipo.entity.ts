@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Adscripcion, Estado, Marca, Procesador, SistemaOperativo, TipoEquipo, Uso } from './catalogo.entities';
+import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
 
 
 
@@ -57,8 +58,11 @@ export class Equipo {
   @ManyToOne(() => Marca, (marca) => marca.equipo)
   marca: Marca;
 
-   @OneToMany(() => Equipo, (equipo) => equipo.marca)
-  equipo: Equipo;
+  @OneToMany(() => Equipo, (equipo) => equipo.marca)
+  equipo: Equipo[];
+
+  @OneToMany(()=> Movimiento, movimiento=>movimiento.id_movimiento)
+  movimiento:Movimiento[];
 
   
 }
