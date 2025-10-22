@@ -5,15 +5,20 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Adscripcion, Estado, Marca, Procesador, SistemaOperativo, TipoEquipo, Uso } from './catalogo.entities';
-
-
+import {
+  Adscripcion,
+  Estado,
+  Marca,
+  Procesador,
+  SistemaOperativo,
+  TipoEquipo,
+  Uso,
+} from './catalogo.entities';
 
 @Entity()
 export class Equipo {
   @PrimaryGeneratedColumn()
   id_equipo: number;
-  
 
   @Column({ length: 100, nullable: true })
   inventario: string;
@@ -57,9 +62,6 @@ export class Equipo {
   @ManyToOne(() => Marca, (marca) => marca.equipo)
   marca: Marca;
 
-   @OneToMany(() => Equipo, (equipo) => equipo.marca)
+  @OneToMany(() => Equipo, (equipo) => equipo.marca)
   equipo: Equipo;
-
-  
-}
 }
