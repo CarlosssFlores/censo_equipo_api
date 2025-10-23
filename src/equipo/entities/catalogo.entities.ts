@@ -9,7 +9,7 @@ export class Uso {
   @Column()
   tipo_uso: string;
   @OneToMany(() => Equipo, (equipo) => equipo.tipoUso)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
 
 @Entity()
@@ -21,7 +21,7 @@ export class Marca {
   tipo_marca: string;
 
   @OneToMany(() => Equipo, (equipo) => equipo.marca)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
 
 @Entity()
@@ -33,7 +33,7 @@ export class Estado {
   estado: string;
 
   @OneToMany(() => Equipo, (equipo) => equipo.estado)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
 
 @Entity()
@@ -45,7 +45,7 @@ export class Adscripcion {
   adscripcion: string;
 
   @OneToMany(() => Equipo, (equipo) => equipo.adscripcion)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
 
 @Entity()
@@ -57,7 +57,7 @@ export class TipoEquipo {
   tipo_equipo: string;
 
   @OneToMany(() => Equipo, (equipo) => equipo.tipoEquipo)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
 
 @Entity()
@@ -69,7 +69,7 @@ export class SistemaOperativo {
   sistema_operativo: string;
 
   @OneToMany(() => Equipo, (equipo) => equipo.sistemaOperativo)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
 
 @Entity()
@@ -81,5 +81,5 @@ export class Procesador {
   procesador: string;
 
   @OneToMany(() => Equipo, (equipo) => equipo.procesador)
-  equipo: Equipo;
+  equipo: Equipo[];
 }

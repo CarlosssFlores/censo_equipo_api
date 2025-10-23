@@ -6,6 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { MovimientoModule } from './movimiento/movimiento.module';
 import { EquipoModule } from './equipo/equipo.module';
+import { AuthModule } from './auth/auth.module';
+
+
+
+
 
 @Module({
   imports: [
@@ -25,6 +30,8 @@ import { EquipoModule } from './equipo/equipo.module';
     UsuariosModule,
     MovimientoModule,
     EquipoModule,
+    UsuariosModule,
+    AuthModule
   ],
   controllers: [],
   providers: [AppService],
