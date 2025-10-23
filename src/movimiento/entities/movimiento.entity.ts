@@ -1,26 +1,25 @@
+import { Equipo } from 'src/equipo/entities/equipo.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
-<<<<<<< HEAD
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-=======
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
->>>>>>> 4134c487eba9ba2b35a160dbf82dec98af0a19f3
 
 @Entity('movimientos')
 export class Movimiento {
   @PrimaryGeneratedColumn()
   id_movimiento: number;
 
-  @ManyToOne(() => Movimiento, (id_usuario) => id_usuario.id_usuario)
-  id_usuario: Movimiento;
+  @ManyToOne(() => Usuario, (usuario) => usuario.movimiento)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario: Usuario;
 
-  @ManyToOne(() => Movimiento, (id_equipo) => id_equipo.id_equipo)
-  id_equipo: Movimiento;
+  @ManyToOne(() => Equipo, (equipo) => equipo.movimientos)
+  @JoinColumn({ name: 'id_equipo' })
+  equipo: Equipo;
 
   @Column({ name: 'fecha_movimiento' })
   fechaMovimiento: Date;
