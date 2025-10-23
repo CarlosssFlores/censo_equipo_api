@@ -9,12 +9,11 @@ import { Adscripcion, Estado, Marca, Procesador, SistemaOperativo, TipoEquipo, U
 import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
 
 
-
 @Entity()
 export class Equipo {
   @PrimaryGeneratedColumn()
   id_equipo: number;
-  
+  //checar bien aqui si estoy bien
 
   @Column({ length: 100, nullable: true })
   inventario: string;
@@ -55,11 +54,13 @@ export class Equipo {
   @ManyToOne(() => Marca, (marca) => marca.equipo)
   marca: Marca;
 
-  @OneToMany(() => Equipo, (equipo) => equipo.marca)
+   @OneToMany(() => Equipo, (equipo) => equipo.marca)
   equipo: Equipo[];
+   
+  @OneToMany(() => Movimiento, (mov) => mov.equipo)
+  movimientos: Movimiento[];
 
-  @OneToMany(()=> Movimiento, movimiento=>movimiento.id_movimiento)
-  movimiento:Movimiento[];
+  
 
   
 }

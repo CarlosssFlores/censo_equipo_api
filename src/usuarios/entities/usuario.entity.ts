@@ -1,6 +1,8 @@
 import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
 import {Column,  Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 
+import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
+
 @Entity()
 export class Usuario {
   @PrimaryGeneratedColumn()
