@@ -22,13 +22,14 @@ export class UsuariosService {
 
     return await this.usuarioRepository.save(user);
   }
+   async findOneByName(nombre: string) {
+    return await this.usuarioRepository.findOne({where:{nombre}});
+  }
 
   async remove(id:number) {
     return await this.usuarioRepository.delete(id);
   }
-  async findOneByName(nombre: string) {
-    return await this.usuarioRepository.findOne({where:{nombre}});
-  }
+ 
 
 
   findAll() {

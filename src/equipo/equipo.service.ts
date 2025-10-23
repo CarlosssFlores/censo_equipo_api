@@ -96,8 +96,6 @@ export class EquipoService {
     marca: equipoNuevo.id_marca ? { id_marca: equipoNuevo.id_marca } : undefined,
   };
 
-
-
   const equipoUpdate=await this.equipoRepository.preload(updateData);
 
   if(!equipoUpdate){
@@ -105,7 +103,6 @@ export class EquipoService {
 
   }
   return await this.equipoRepository.save(equipoUpdate);
-
 
  } 
 }

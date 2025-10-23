@@ -30,7 +30,6 @@ import { AuthModule } from './auth/auth.module';
     UsuariosModule,
     MovimientoModule,
     EquipoModule,
-    UsuariosModule,
     AuthModule
   ],
   controllers: [],

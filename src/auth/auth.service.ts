@@ -11,20 +11,24 @@ export class AuthService {
         private readonly usuarioService:UsuariosService,
         private readonly jwtService:JwtService
     ){}
+    //Pendiente
     async registro({nombre, contraseña,tipoUsuario}: CreateUsuarioDto){
         const usuario= await this.usuarioService.findOneByName(nombre)
         if(usuario){
             throw new BadRequestException("Nombre de usuario ya existente");
         }
       const hashedContraseña= await argon2.hash(contraseña) ;
+      
       await this.usuarioService.create({
         nombre,
         contraseña:hashedContraseña,
-        tipoUsuario
+        tipoUsuario, 
       });
+      
       return{
         message:"Usuario registrado exitosamente "  };
     }
+
     async login({nombre, contraseña}:LoginDto){
         const usuario= await this.usuarioService.findOneByName(nombre)
         if(!usuario){
@@ -39,7 +43,9 @@ export class AuthService {
         const dataUser={
             id:usuario.id_usuario,
             nombre:usuario.nombre, 
-            tipoUsuario:usuario.tipoUsuario.id_tipo_usuario}
+            tipoUsuario:usuario.tipoUsuario.id_tipo_usuario
+        }
+
         const token=await this.jwtService.sign(dataUser)
         return{
            token:token,

@@ -31,7 +31,7 @@ export class MovimientoService {
     if (!usuario || !equipo) {
       throw new Error('Usuario o equipo no encontrado');
     }
-
+/*
     const movimiento = this.movimientoRepo.create({
       usuario,
       equipo,
@@ -39,5 +39,7 @@ export class MovimientoService {
     });
 
     return await this.movimientoRepo.save(movimiento);
+  }
+    */
   }
 }

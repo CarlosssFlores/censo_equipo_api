@@ -20,27 +20,9 @@ export class Equipo {
 
   @Column({ length: 100, nullable: true })
   serie: string;
-
-  @ManyToOne(() => Estado, (estado) => estado.equipo)
-  estado: Estado;
-
-  @ManyToOne(() => Adscripcion, (adscripcion) => adscripcion.equipo)
-  adscripcion: Adscripcion;
-
+  
   @Column({ length: 100, nullable: true })
   lugar: string;
-
-  @ManyToOne(() => TipoEquipo, (tipoEquipo) => tipoEquipo.equipo)
-  tipoEquipo: TipoEquipo;
-
-  @ManyToOne(() => SistemaOperativo,(sistemaOperativo) => sistemaOperativo.equipo)
-  sistemaOperativo: SistemaOperativo;
-
-  @ManyToOne(() => Procesador, (procesador) => procesador.equipo)
-  procesador: Procesador;
-
-  @ManyToOne(() => Uso, (tipoUso) => tipoUso.equipo)
-  tipoUso: Uso;
 
   @Column({ name: 'fecha_factura' })
   fechaFactura: Date;
@@ -50,15 +32,36 @@ export class Equipo {
 
   @Column({ length: 100, nullable: true })
   modelo: string;
+  //Relaciones
+  @OneToMany(()=>Movimiento, mov => mov.equipo)
+  mov:Movimiento[]
 
-  @ManyToOne(() => Marca, (marca) => marca.equipo)
+  @ManyToOne(() => Estado, estado => estado.equipo)
+  estado: Estado;
+
+  @ManyToOne(() => Adscripcion, (adscripcion) => adscripcion.equipo)
+  adscripcion: Adscripcion;
+
+   @ManyToOne(() => TipoEquipo, tipoEquipo => tipoEquipo.equipo)
+  tipoEquipo: TipoEquipo;
+
+  @ManyToOne(() => SistemaOperativo, sistemaOperativo => sistemaOperativo.equipo)
+  sistemaOperativo: SistemaOperativo;
+
+  @ManyToOne(() => Procesador, procesador => procesador.equipo)
+  procesador: Procesador;
+
+  @ManyToOne(() => Uso, tipoUso => tipoUso.equipo)
+  tipoUso: Uso;
+
+  @ManyToOne(() => Marca, marca => marca.equipo)
   marca: Marca;
 
-   @OneToMany(() => Equipo, (equipo) => equipo.marca)
+  @OneToMany(() => Equipo, equipo => equipo.marca)
   equipo: Equipo[];
+
+  
    
-  @OneToMany(() => Movimiento, (mov) => mov.equipo)
-  movimientos: Movimiento[];
 
   
 
