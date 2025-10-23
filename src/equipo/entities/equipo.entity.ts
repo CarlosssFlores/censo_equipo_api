@@ -14,11 +14,15 @@ import {
   TipoEquipo,
   Uso,
 } from './catalogo.entities';
+import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
 
 @Entity()
 export class Equipo {
   @PrimaryGeneratedColumn()
   id_equipo: number;
+  //checar bien aqui si estoy bien
+  @OneToMany(() => Movimiento, (mov) => mov.equipo)
+  movimientos: Movimiento[];
 
   @Column({ length: 100, nullable: true })
   inventario: string;

@@ -1,26 +1,86 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEquipoDto } from './dto/create-equipo.dto';
-import { UpdateEquipoDto } from './dto/update-equipo.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Equipo } from './entities/equipo.entity';
 
 @Injectable()
 export class EquipoService {
-  create(createEquipoDto: CreateEquipoDto) {
-    return 'This action adds a new equipo';
-  }
+  constructor(
+    @InjectRepository(Equipo)
+    private readonly equipoRepository: Repository<Equipo>,
+  ) {}
 
-  findAll() {
-    return `This action returns all equipo`;
-  }
+  async buscarEquipos(filtros: any, page: number = 1, limit: number = 10) {
+    const query = this.equipoRepository
+      .createQueryBuilder('equipo')
+      .leftJoinAndSelect('equipo.marca', 'marca')
+      .leftJoinAndSelect('equipo.estado', 'estado')
+      .leftJoinAndSelect('equipo.adscripcion', 'adscripcion')
+      .leftJoinAndSelect('equipo.tipoEquipo', 'tipoEquipo')
+      .leftJoinAndSelect('equipo.sistemaOperativo', 'sistemaOperativo')
+      .leftJoinAndSelect('equipo.procesador', 'procesador')
+      .leftJoinAndSelect('equipo.tipoUso', 'tipoUso');
 
-  findOne(id: number) {
-    return `This action returns a #${id} equipo`;
-  }
+    // Filtros dinámicos
+    if (filtros.inventario) {
+      query.andWhere('equipo.inventario LIKE :inventario', {
+        inventario: `%${filtros.inventario}%`,
+      });
+    }
 
-  update(id: number, updateEquipoDto: UpdateEquipoDto) {
-    return `This action updates a #${id} equipo`;
-  }
+    if (filtros.tipoEquipo) {
+      query.andWhere('tipoEquipo.id = :tipoEquipo', {
+        tipoEquipo: filtros.tipoEquipo,
+      });
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} equipo`;
+    if (filtros.antiguedad) {
+      query.andWhere('equipo.antiguedad LIKE :antiguedad', {
+        antiguedad: `%${filtros.antiguedad}%`,
+      });
+    }
+
+    if (filtros.marca) {
+      query.andWhere('marca.id = :marca', { marca: filtros.marca });
+    }
+
+    if (filtros.estado) {
+      query.andWhere('estado.id = :estado', { estado: filtros.estado });
+    }
+
+    if (filtros.adscripcion) {
+      query.andWhere('adscripcion.id = :adscripcion', {
+        adscripcion: filtros.adscripcion,
+      });
+    }
+
+    if (filtros.tipoUso) {
+      query.andWhere('tipoUso.id = :tipoUso', { tipoUso: filtros.tipoUso });
+    }
+
+    if (filtros.procesador) {
+      query.andWhere('procesador.id = :procesador', {
+        procesador: filtros.procesador,
+      });
+    }
+
+    if (filtros.sistemaOperativo) {
+      query.andWhere('sistemaOperativo.id = :sistemaOperativo', {
+        sistemaOperativo: filtros.sistemaOperativo,
+      });
+    }
+
+    // Paginación
+    query.skip((page - 1) * limit).take(limit);
+
+    // Ejecutar consulta
+    const [data, total] = await query.getManyAndCount();
+
+    return {
+      total,
+      page,
+      limit,
+      data,
+    };
   }
 }

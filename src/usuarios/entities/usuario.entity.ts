@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
+
 @Entity()
 export class Usuario {
   @PrimaryGeneratedColumn()
