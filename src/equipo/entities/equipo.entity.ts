@@ -5,6 +5,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+<<<<<<<<< Temporary merge branch 1
+import { Adscripcion, Estado, Marca, Procesador, SistemaOperativo, TipoEquipo, Uso } from './catalogo.entities';
+import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
+
+
+=========
 import {
   Adscripcion,
   Estado,
@@ -15,37 +21,27 @@ import {
   Uso,
 } from './catalogo.entities';
 import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
+>>>>>>>>> Temporary merge branch 2
 
 @Entity()
 export class Equipo {
   @PrimaryGeneratedColumn()
   id_equipo: number;
   //checar bien aqui si estoy bien
-  @OneToMany(() => Movimiento, (mov) => mov.equipo)
-  movimientos: Movimiento[];
 
   @Column({ length: 100, nullable: true })
   inventario: string;
 
   @Column({ length: 100, nullable: true })
   serie: string;
-
-  @ManyToOne(() => Estado, (estado) => estado.equipo)
-  estado: Estado;
-
-  @ManyToOne(() => Adscripcion, (adscripcion) => adscripcion.equipo)
-  adscripcion: Adscripcion;
-
+  
   @Column({ length: 100, nullable: true })
   lugar: string;
 
   @ManyToOne(() => TipoEquipo, (tipoEquipo) => tipoEquipo.equipo)
   tipoEquipo: TipoEquipo;
 
-  @ManyToOne(
-    () => SistemaOperativo,
-    (sistemaOperativo) => sistemaOperativo.equipo,
-  )
+  @ManyToOne(() => SistemaOperativo,(sistemaOperativo) => sistemaOperativo.equipo)
   sistemaOperativo: SistemaOperativo;
 
   @ManyToOne(() => Procesador, (procesador) => procesador.equipo)
@@ -63,9 +59,43 @@ export class Equipo {
   @Column({ length: 100, nullable: true })
   modelo: string;
 
-  @ManyToOne(() => Marca, (marca) => marca.equipo)
+  
+  //Relaciones
+  @OneToMany(()=>Movimiento, mov => mov.equipo)
+  mov:Movimiento[]
+
+  @ManyToOne(() => Estado, estado => estado.equipo)
+  estado: Estado;
+
+  @ManyToOne(() => Adscripcion, (adscripcion) => adscripcion.equipo)
+  adscripcion: Adscripcion;
+
+   @ManyToOne(() => TipoEquipo, tipoEquipo => tipoEquipo.equipo)
+  tipoEquipo: TipoEquipo;
+
+  @ManyToOne(() => SistemaOperativo, sistemaOperativo => sistemaOperativo.equipo)
+  sistemaOperativo: SistemaOperativo;
+
+  @ManyToOne(() => Procesador, procesador => procesador.equipo)
+  procesador: Procesador;
+
+  @ManyToOne(() => Uso, tipoUso => tipoUso.equipo)
+  tipoUso: Uso;
+
+  @ManyToOne(() => Marca, marca => marca.equipo)
   marca: Marca;
 
   @OneToMany(() => Equipo, (equipo) => equipo.marca)
+<<<<<<<<< Temporary merge branch 1
   equipo: Equipo[];
+
+  @OneToMany(()=> Movimiento, movimiento=>movimiento.id_movimiento)
+  movimiento:Movimiento[];
+
+  
 }
+
+=========
+  equipo: Equipo;
+}
+>>>>>>>>> Temporary merge branch 2

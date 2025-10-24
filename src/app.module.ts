@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -24,13 +23,13 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      autoLoadEntities: true,
+      //autoLoadEntities: true,
       synchronize: true,
     }),
     UsuariosModule,
+
     MovimientoModule,
     EquipoModule,
-    UsuariosModule,
     AuthModule
   ],
   controllers: [],

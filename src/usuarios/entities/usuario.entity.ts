@@ -13,7 +13,7 @@ export class Usuario {
   id_usuario: number;
 
   @Column({ length: 100, nullable: true })
-  correo: string;
+  nombre: string;
 
   @Column({ length: 100, nullable: true })
   contraseña: string;

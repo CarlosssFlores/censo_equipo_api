@@ -9,7 +9,7 @@ export class CreateMovimientoDto {
   @IsNumber()
   idEquipo: number;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  observaciones?: string;
+  observaciones: string;
 }

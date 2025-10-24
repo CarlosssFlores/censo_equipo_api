@@ -1,9 +1,12 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException, InternalServerErrorException } from '@nestjs/common';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import * as argon2 from 'argon2';
 import { LoginDto } from './dto/login.dto';
 import { CreateUsuarioDto } from 'src/usuarios/dto/create-usuario.dto';
 import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
@@ -11,20 +14,32 @@ export class AuthService {
         private readonly usuarioService:UsuariosService,
         private readonly jwtService:JwtService
     ){}
+    //Pendiente     tipoUsuario
     async registro({nombre, contraseña,tipoUsuario}: CreateUsuarioDto){
-        const usuario= await this.usuarioService.findOneByName(nombre)
+        
+        const usuario = await this.usuarioService.findOneByName(nombre);
         if(usuario){
             throw new BadRequestException("Nombre de usuario ya existente");
         }
-      const hashedContraseña= await argon2.hash(contraseña) ;
-      await this.usuarioService.create({
-        nombre,
-        contraseña:hashedContraseña,
-        tipoUsuario
-      });
-      return{
-        message:"Usuario registrado exitosamente "  };
+
+        try{
+            const hashedContraseña = await argon2.hash(contraseña);
+
+            await this.usuarioService.create({
+                nombre,
+                contraseña: hashedContraseña,
+                tipoUsuario,
+            });
+
+            return {
+                message: "Usuario registrado exitosamente"
+            };
+        }catch(error){
+            
+            throw new InternalServerErrorException('Error al crear el usuario');
+        }
     }
+
     async login({nombre, contraseña}:LoginDto){
         const usuario= await this.usuarioService.findOneByName(nombre)
         if(!usuario){
@@ -39,7 +54,9 @@ export class AuthService {
         const dataUser={
             id:usuario.id_usuario,
             nombre:usuario.nombre, 
-            tipoUsuario:usuario.tipoUsuario.id_tipo_usuario}
+            tipoUsuario:usuario.tipoUsuario.id_tipo_usuario
+        }
+
         const token=await this.jwtService.sign(dataUser)
         return{
            token:token,
