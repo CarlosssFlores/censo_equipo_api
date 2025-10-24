@@ -6,6 +6,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { MovimientoModule } from './movimiento/movimiento.module';
 import { EquipoModule } from './equipo/equipo.module';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
 
 
 
@@ -23,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      //autoLoadEntities: true,
+      autoLoadEntities: true,
       synchronize: true,
     }),
     UsuariosModule,
@@ -32,7 +33,8 @@ import { AuthModule } from './auth/auth.module';
     EquipoModule,
     AuthModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [AppService],
+
 })
 export class AppModule {}
