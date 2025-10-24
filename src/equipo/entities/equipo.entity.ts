@@ -32,6 +32,8 @@ export class Equipo {
 
   @Column({ length: 100, nullable: true })
   modelo: string;
+
+  
   //Relaciones
   @OneToMany(()=>Movimiento, mov => mov.equipo)
   mov:Movimiento[]

@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsuariosModule } from 'src/usuarios/usuarios.module';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { JwtModule } from '@nestjs/jwt';
 
 
 
 @Module({
-  imports:[UsuariosModule,
+  imports:[
+    UsuariosModule,
     JwtModule,
     JwtModule.register({
       global:true,
@@ -18,6 +18,7 @@ import { UsuariosService } from 'src/usuarios/usuarios.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService,UsuariosService, JwtService]
+  providers: [AuthService],
+  exports:[AuthService]
 })
 export class AuthModule {}

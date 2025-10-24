@@ -10,5 +10,6 @@ import { Equipo } from 'src/equipo/entities/equipo.entity';
   imports: [TypeOrmModule.forFeature([Movimiento, Usuario, Equipo])],
   controllers: [MovimientoController],
   providers: [MovimientoService],
+  exports:[MovimientoService]
 })
 export class MovimientoModule {}

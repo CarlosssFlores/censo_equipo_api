@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
-    private readonly usuarioRepository: Repository <Usuario>
+    private readonly usuarioRepository: Repository<Usuario>
   ){}
   async create(createUsuarioDto: CreateUsuarioDto) {
       

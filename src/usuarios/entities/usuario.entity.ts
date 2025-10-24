@@ -2,6 +2,7 @@ import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
 import {Column,  Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 
 
+
 @Entity()
 export class Tipo_Usuario {
     @PrimaryGeneratedColumn()
@@ -27,7 +28,7 @@ export class Usuario {
     contraseña:string
     
     
-    @ManyToOne(()=>Tipo_Usuario,tipoUsuario=>tipoUsuario.usuarios )
+    @ManyToOne(()=>Tipo_Usuario,tipoUsuario=>tipoUsuario.usuarios)
     tipoUsuario:Tipo_Usuario;
     
     @OneToMany(()=>Movimiento, movimiento=>movimiento.id_movimiento)
