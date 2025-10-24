@@ -3,12 +3,33 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Equipo } from './entities/equipo.entity';
 import { UpdateEquipoDto } from './dto/update-equipo.dto'
+import { Adscripcion, Estado, Marca, Procesador, SistemaOperativo, TipoEquipo, Uso } from './entities/catalogo.entities';
 
 @Injectable()
 export class EquipoService {
   constructor(
     @InjectRepository(Equipo)
     private readonly equipoRepository: Repository<Equipo>,
+      @InjectRepository(Uso)
+    private readonly usoRepo: Repository<Uso>,
+
+    @InjectRepository(Marca)
+    private readonly marcaRepo: Repository<Marca>,
+
+    @InjectRepository(Estado)
+    private readonly estadoRepo: Repository<Estado>,
+
+    @InjectRepository(Adscripcion)
+    private readonly adscripcionRepo: Repository<Adscripcion>,
+
+    @InjectRepository(TipoEquipo)
+    private readonly tipoEquipoRepo: Repository<TipoEquipo>,
+
+    @InjectRepository(SistemaOperativo)
+    private readonly sistemaOperativoRepo: Repository<SistemaOperativo>,
+
+    @InjectRepository(Procesador)
+    private readonly procesadorRepo: Repository<Procesador>,
   ) {}
 
   async buscarEquipos(filtros: any, page: number = 1, limit: number = 10) {
@@ -104,7 +125,38 @@ export class EquipoService {
   }
   return await this.equipoRepository.save(equipoUpdate);
 
- } 
 }
+
+findAllUsos() {
+    return this.usoRepo.find();
+  }
+
+  findAllMarcas() {
+    return this.marcaRepo.find();
+  }
+
+  findAllEstados() {
+    return this.estadoRepo.find();
+  }
+
+  findAllAdscripciones() {
+    return this.adscripcionRepo.find();
+  }
+
+  findAllTiposEquipo() {
+    return this.tipoEquipoRepo.find();
+  }
+
+  findAllSistemasOperativos() {
+    return this.sistemaOperativoRepo.find();
+  }
+
+  findAllProcesadores() {
+    return this.procesadorRepo.find();
+  }
+}
+
+
+
 
 

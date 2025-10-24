@@ -4,9 +4,6 @@ import * as argon2 from 'argon2';
 import { LoginDto } from './dto/login.dto';
 import { CreateUsuarioDto } from 'src/usuarios/dto/create-usuario.dto';
 import { JwtService } from '@nestjs/jwt';
-import { Repository } from 'typeorm';
-import { Usuario } from 'src/usuarios/entities/usuario.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +11,7 @@ export class AuthService {
         private readonly usuarioService:UsuariosService,
         private readonly jwtService:JwtService
     ){}
-    //Pendiente     tipoUsuario
+
     async registro({nombre, contraseña,tipoUsuario}: CreateUsuarioDto){
         
         const usuario = await this.usuarioService.findOneByName(nombre);
@@ -62,6 +59,7 @@ export class AuthService {
            token:token,
         };
     }
+    
 
 
 

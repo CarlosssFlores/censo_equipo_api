@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Usuario } from './entities/usuario.entity';
+import { Tipo_Usuario, Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
-    private readonly usuarioRepository: Repository<Usuario>
+    private readonly usuarioRepository: Repository<Usuario>,
+    
+    @InjectRepository(Tipo_Usuario)
+    private readonly tipoUsuarioRepository: Repository<Tipo_Usuario>
   ){}
   async create(createUsuarioDto: CreateUsuarioDto) {
       
@@ -26,16 +29,13 @@ export class UsuariosService {
     return await this.usuarioRepository.findOne({where:{nombre}});
   }
 
-  async remove(id:number) {
-    return await this.usuarioRepository.delete(id);
+  async createUser(tipoUsuario:string){
+    let user=await this.tipoUsuarioRepository.create({
+      tipo_usuario:tipoUsuario
+    })
+    return await this.tipoUsuarioRepository.save(user)
   }
- 
-
-
-  findAll() {
-    return this.usuarioRepository.find();
-  }
-
+  
   
 
   
