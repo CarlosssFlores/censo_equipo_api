@@ -1,7 +1,11 @@
 import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
-import {Column,  Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
-
-import { Movimiento } from 'src/movimiento/entities/movimiento.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Usuario {
@@ -9,18 +13,16 @@ export class Usuario {
   id_usuario: number;
 
   @Column({ length: 100, nullable: true })
-  nombre: string;
+  correo: string;
 
-    @Column({length:100,nullable:true})
-    contraseña:string
-    
-    
-    @ManyToOne(()=>Tipo_Usuario,tipoUsuario=>tipoUsuario.usuarios )
-    tipoUsuario:Tipo_Usuario;
-    
-    @OneToMany(()=>Movimiento, movimiento=>movimiento.id_movimiento)
-    movimiento:Movimiento[];
+  @Column({ length: 100, nullable: true })
+  contraseña: string;
 
+  @ManyToOne(() => Tipo_Usuario, (tipoUsuario) => tipoUsuario.usuarios)
+  tipoUsuario: Tipo_Usuario;
+
+  @OneToMany(() => Movimiento, (movimiento) => movimiento.id_movimiento)
+  movimiento: Movimiento[];
 }
 
 @Entity()
@@ -28,9 +30,9 @@ export class Tipo_Usuario {
   @PrimaryGeneratedColumn()
   id_tipo_usuario: number;
 
-    @Column({length:50, nullable:true})
-    tipo_usuario:string
+  @Column({ length: 50, nullable: true })
+  tipo_usuario: string;
 
-    @OneToMany(() => Usuario, (usuarios) => usuarios.tipoUsuario)
-    usuarios: Usuario[];
+  @OneToMany(() => Usuario, (usuarios) => usuarios.tipoUsuario)
+  usuarios: Usuario[];
 }

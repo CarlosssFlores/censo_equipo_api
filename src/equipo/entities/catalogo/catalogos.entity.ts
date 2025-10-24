@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Equipo } from './equipo.entity';
+import { Equipo } from '../equipo.entity';
 
 @Entity()
 export class Uso {

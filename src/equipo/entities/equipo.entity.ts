@@ -67,5 +67,5 @@ export class Equipo {
   marca: Marca;
 
   @OneToMany(() => Equipo, (equipo) => equipo.marca)
-  equipo: Equipo;
+  equipo: Equipo[];
 }
