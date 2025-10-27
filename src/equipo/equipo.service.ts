@@ -3,6 +3,70 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Equipo } from './entities/equipo.entity';
 import { UpdateEquipoDto } from './dto/update-equipo.dto';
+import {
+  Adscripcion,
+  Estado,
+  Marca,
+  Procesador,
+  SistemaOperativo,
+  TipoEquipo,
+  Uso,
+} from './entities/catalogos.entity';
+
+@Injectable()
+export class CatalogosService {
+  constructor(
+    @InjectRepository(Uso)
+    private readonly usoRepo: Repository<Uso>,
+
+    @InjectRepository(Marca)
+    private readonly marcaRepo: Repository<Marca>,
+
+    @InjectRepository(Estado)
+    private readonly estadoRepo: Repository<Estado>,
+
+    @InjectRepository(Adscripcion)
+    private readonly adscripcionRepo: Repository<Adscripcion>,
+
+    @InjectRepository(TipoEquipo)
+    private readonly tipoEquipoRepo: Repository<TipoEquipo>,
+
+    @InjectRepository(SistemaOperativo)
+    private readonly sistemaOperativoRepo: Repository<SistemaOperativo>,
+
+    @InjectRepository(Procesador)
+    private readonly procesadorRepo: Repository<Procesador>,
+  ) {}
+
+  // Métodos para devolver cada catálogo
+  findAllUsos() {
+    return this.usoRepo.find();
+  }
+
+  findAllMarcas() {
+    return this.marcaRepo.find();
+  }
+
+  findAllEstados() {
+    return this.estadoRepo.find();
+  }
+
+  findAllAdscripciones() {
+    return this.adscripcionRepo.find();
+  }
+
+  findAllTiposEquipo() {
+    return this.tipoEquipoRepo.find();
+  }
+
+  findAllSistemasOperativos() {
+    return this.sistemaOperativoRepo.find();
+  }
+
+  findAllProcesadores() {
+    return this.procesadorRepo.find();
+  }
+}
 
 @Injectable()
 export class EquipoService {
@@ -10,6 +74,29 @@ export class EquipoService {
     @InjectRepository(Equipo)
     private readonly equipoRepository: Repository<Equipo>,
   ) {}
+  async buscarPorCodigoBarras(codigoBarras: string) {
+    // Busca un equipo que coincida con el código de barras
+    const equipo = await this.equipoRepository.findOne({
+      where: {}, // <-- el campo debe existir en tu entidad Equipo
+      relations: [
+        'marca',
+        'estado',
+        'adscripcion',
+        'tipoEquipo',
+        'sistemaOperativo',
+        'procesador',
+        'tipoUso',
+      ],
+    });
+
+    if (!equipo) {
+      throw new Error(
+        `No se encontró un equipo con el código de barras: ${codigoBarras}`,
+      );
+    }
+
+    return equipo;
+  }
 
   async buscarEquipos(filtros: any, page: number = 1, limit: number = 10) {
     const query = this.equipoRepository

@@ -1,13 +1,57 @@
-<<<<<<< HEAD
-import { Controller, Get, Query } from '@nestjs/common';
-import { EquipoService } from './equipo.service';
-=======
-
-import { Controller, Body, Patch, Param, ParseIntPipe, UseGuards,Get, Query  } from '@nestjs/common';
-import { EquipoService } from './equipo.service';
+import {
+  Controller,
+  Body,
+  Patch,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+  Get,
+  Query,
+} from '@nestjs/common';
+import { CatalogosService, EquipoService } from './equipo.service';
 import { UpdateEquipoDto } from './dto/update-equipo.dto';
 import { AuthGuard } from '@nestjs/passport';
->>>>>>> a2be3ee273b121c4dad11552acb7cef9653fb7d8
+
+@Controller('catalogos')
+@UseGuards(AuthGuard('jwt'))
+export class CatalogosController {
+  constructor(private readonly catalogosService: CatalogosService) {}
+
+  @Get('usos')
+  findUsos() {
+    return this.catalogosService.findAllUsos();
+  }
+
+  @Get('marcas')
+  findMarcas() {
+    return this.catalogosService.findAllMarcas();
+  }
+
+  @Get('estados')
+  findEstados() {
+    return this.catalogosService.findAllEstados();
+  }
+
+  @Get('adscripciones')
+  findAdscripciones() {
+    return this.catalogosService.findAllAdscripciones();
+  }
+
+  @Get('tipos-equipo')
+  findTiposEquipo() {
+    return this.catalogosService.findAllTiposEquipo();
+  }
+
+  @Get('sistemas-operativos')
+  findSistemasOperativos() {
+    return this.catalogosService.findAllSistemasOperativos();
+  }
+
+  @Get('procesadores')
+  findProcesadores() {
+    return this.catalogosService.findAllProcesadores();
+  }
+}
 
 @Controller('equipos')
 export class EquipoController {
@@ -21,13 +65,12 @@ export class EquipoController {
   ) {
     return this.equipoService.buscarEquipos(filtros, +page, +limit);
   }
-<<<<<<< HEAD
-=======
-  @UseGuards(AuthGuard("jwt"))
-  @Patch("update/:id")
-  update(@Param('id', ParseIntPipe) id:number, @Body() equipoNuevo: UpdateEquipoDto) {
-    return this.equipoService.updateEquipo( equipoNuevo,id);
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('update/:id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() equipoNuevo: UpdateEquipoDto,
+  ) {
+    return this.equipoService.updateEquipo(equipoNuevo, id);
   }
-
->>>>>>> a2be3ee273b121c4dad11552acb7cef9653fb7d8
 }
