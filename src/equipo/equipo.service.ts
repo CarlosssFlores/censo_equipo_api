@@ -3,19 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Equipo } from './entities/equipo.entity';
 import { UpdateEquipoDto } from './dto/update-equipo.dto';
-import {
-  Adscripcion,
-  Estado,
-  Marca,
-  Procesador,
-  SistemaOperativo,
-  TipoEquipo,
-  Uso,
-} from './entities/catalogos.entity';
 
 @Injectable()
-export class CatalogosService {
+export class EquipoService {
   constructor(
+    @InjectRepository(Equipo)
+    private readonly equipoRepository: Repository<Equipo>,
     @InjectRepository(Uso)
     private readonly usoRepo: Repository<Uso>,
 
@@ -36,43 +29,6 @@ export class CatalogosService {
 
     @InjectRepository(Procesador)
     private readonly procesadorRepo: Repository<Procesador>,
-  ) {}
-
-  // Métodos para devolver cada catálogo
-  findAllUsos() {
-    return this.usoRepo.find();
-  }
-
-  findAllMarcas() {
-    return this.marcaRepo.find();
-  }
-
-  findAllEstados() {
-    return this.estadoRepo.find();
-  }
-
-  findAllAdscripciones() {
-    return this.adscripcionRepo.find();
-  }
-
-  findAllTiposEquipo() {
-    return this.tipoEquipoRepo.find();
-  }
-
-  findAllSistemasOperativos() {
-    return this.sistemaOperativoRepo.find();
-  }
-
-  findAllProcesadores() {
-    return this.procesadorRepo.find();
-  }
-}
-
-@Injectable()
-export class EquipoService {
-  constructor(
-    @InjectRepository(Equipo)
-    private readonly equipoRepository: Repository<Equipo>,
   ) {}
   async buscarPorCodigoBarras(codigoBarras: string) {
     // Busca un equipo que coincida con el código de barras

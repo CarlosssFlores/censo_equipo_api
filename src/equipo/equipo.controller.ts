@@ -56,7 +56,7 @@ export class CatalogosController {
 @Controller('equipos')
 export class EquipoController {
   constructor(private readonly equipoService: EquipoService) {}
-
+  @UseGuards(AuthGuard('jwt'))
   @Get('buscar')
   async buscarEquipos(
     @Query() filtros: any,
@@ -65,6 +65,7 @@ export class EquipoController {
   ) {
     return this.equipoService.buscarEquipos(filtros, +page, +limit);
   }
+
   @UseGuards(AuthGuard('jwt'))
   @Patch('update/:id')
   update(
